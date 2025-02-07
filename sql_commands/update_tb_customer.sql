@@ -11,3 +11,8 @@ SET address = "Jorge Emilio 23",
     state = "JC", 
     zip_code = "44700000" 
 WHERE dni = "5840119709";
+
+UPDATE tb_customer C
+INNER JOIN tb_seller S
+ON C.neighborhood = S.neighborhood
+SET C.purchase_vol = C.purchase_vol * 1.3;

@@ -1,0 +1,22 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `price_quantity`()
+BEGIN
+DECLARE quantity INT;
+DECLARE price INT;
+DECLARE is_open TINYINT DEFAULT 1;
+DECLARE data CURSOR FOR SELECT IFa.CANTIDAD, IFa.PRECIO FROM items_facturas IFa
+INNER JOIN facturas  F ON F.NUMERO = IFa.NUMERO
+WHERE MONTH(F.FECHA_VENTA) = 10 AND YEAR(F.FECHA_VENTA) = 2017
+LIMIT 20;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET is_open = 0;
+
+OPEN data;
+WHILE is_open
+DO
+FETCH data INTO quantity, price;
+IF is_open
+THEN SELECT quantity, price;
+END IF;
+END WHILE;
+CLOSE data;
+
+END
